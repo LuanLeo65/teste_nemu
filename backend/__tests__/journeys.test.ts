@@ -13,7 +13,7 @@ const journey = [
     utm_medium: "medium_teste",
     utm_content: "content_teste",
     sessionId: "session_id_teste",
-    created_At: '2025-01-01T10:00:00Z'
+    createdAt: '2025-01-01T10:00:00Z'
   },
 
   {
@@ -22,7 +22,7 @@ const journey = [
     utm_medium: "medium_teste",
     utm_content: "content_teste",
     sessionId: "session_id_teste",
-    created_At: '2025-01-01T11:00:00Z'
+    createdAt: '2025-01-01T11:00:00Z'
   },
 ];
 

@@ -5,7 +5,7 @@ export interface IJourney {
   utm_medium: string;
   utm_content: string;
   sessionId: string;
-  created_At: string;
+  createdAt: string;
 }
 
 export type IJourneyArray = IJourney[];

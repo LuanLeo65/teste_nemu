@@ -23,10 +23,10 @@ async function getJourneys(req: Request, res: Response, next: any) {
 
     fileObject.forEach((item) => {
       if (!agrouped[item.sessionId]) agrouped[item.sessionId] = [];
-      if (item.created_At)
+      if (item.createdAt)
         agrouped[item.sessionId].push({
           utm_source: item.utm_source,
-          createdAt: item.created_At,
+          createdAt: item.createdAt,
         });
     });
 
@@ -59,7 +59,7 @@ async function getJourneys(req: Request, res: Response, next: any) {
       const uniqueMiddle = [...new Set(middleJourney)];
 
 
-      result[sessionId] = [firstJourney, ...uniqueMiddle, lastJourney];
+      result[sessionId] = [firstJourney, ...uniqueMiddle, lastJourney]
     }
 
     return res.status(200).json(result);
