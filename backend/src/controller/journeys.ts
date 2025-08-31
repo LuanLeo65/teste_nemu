@@ -1,17 +1,18 @@
 //src/controller/journeys.ts
 import { Response, Request } from "express";
-import  readFile  from "../model/journeyModel";
+import readFile from "../model/journeyModel";
 import { IJourneyArray } from "../model/journey";
+import path from "path";
 
 async function getJourneys(req: Request, res: Response, next: any) {
   try {
     //Captura o arquivo enviado e faz uma verificação
-    const file = req.file?.path;
-    if (!file)
+    const filePath = path.resolve(__dirname, "../../data/journeys.xlsx");
+    if (!filePath)
       return res.status(400).json({ erro: "Arquivo nao enviado/encontrado" });
 
     //Le o arquivo enviado e faz a verificação
-    const fileObject = await readFile.read(file) as IJourneyArray;
+    const fileObject = (await readFile.read(filePath)) as IJourneyArray;
     if (!fileObject)
       return res.status(400).json({ erro: "Erro na leitura das jornadas" });
 
@@ -58,11 +59,18 @@ async function getJourneys(req: Request, res: Response, next: any) {
       //Faz a verificação e nao deixa ter repetido, com a parte do meio das informações
       const uniqueMiddle = [...new Set(middleJourney)];
 
-
-      result[sessionId] = [firstJourney, ...uniqueMiddle, lastJourney]
+      result[sessionId] = [firstJourney, ...uniqueMiddle, lastJourney];
     }
 
-    return res.status(200).json(result);
+    //Transformando para array de objetos para o front
+    const formattedResult = Object.entries(result).map(
+      ([sessionId, channels]) => ({
+        sessionId,
+        channels,
+      })
+    );
+
+    return res.status(200).json(formattedResult);
   } catch (error) {
     console.log(error);
     res

@@ -1,6 +1,5 @@
 //src/model/journeyModel.ts
 import xlsx from "xlsx";
-import fs from 'fs/promises'
 
 async function read(file: string) {
   try {
@@ -12,9 +11,6 @@ async function read(file: string) {
 
     //transforma o arquivo em objeto json
     const data = xlsx.utils.sheet_to_json(sheet);
-
-    //apaga o arquivo temporario da pasta uploads
-    await fs.unlink(file);
 
     return data;
   } catch (error) {
