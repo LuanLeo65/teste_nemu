@@ -8,9 +8,7 @@ async function getJourneys(req: Request, res: Response, next: any) {
   try {
     //Captura o arquivo enviado e faz uma verificação
     const filePath = path.resolve(__dirname, "../../data/journeys.xlsx");
-    if (!filePath)
-      return res.status(400).json({ erro: "Arquivo nao enviado/encontrado" });
-
+   
     //Le o arquivo enviado e faz a verificação
     const fileObject = (await readFile.read(filePath)) as IJourneyArray;
     if (!fileObject)

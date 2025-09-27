@@ -27,12 +27,6 @@ const journey = [
 ];
 
 
-afterEach(async () => {
-  const dir = path.join(__dirname, '../uploads');
-  const files = await fs.readdir(dir);
-  await files.map(f => fs.unlink(path.join(dir, f)));
-})
-
 afterAll(() => {
   jest.clearAllMocks();
   jest.restoreAllMocks();
@@ -44,19 +38,10 @@ describe("Testando as chamadas referente a journeys", () => {
 
     const result = await request(app)
       .get("/journeys")
-      .attach("file", Buffer.from("fake content"), "fake.xlsx");
+
 
     expect(result.status).toBe(200);
-    expect(result.body.session_id_teste).toEqual(['facebook', 'google'])
-  });
-
-  it("GET /journeys , deve retornar 400, quando nao mandar nenhum arquivo", async () => {
-    jest.spyOn(repository, "read").mockResolvedValue(journey);
-
-    const result = await request(app).get("/journeys");
-
-    expect(result.status).toBe(400);
-    expect(result.body.erro).toBe("Arquivo nao enviado/encontrado");
+    expect(result.body[0].channels).toEqual(['facebook', 'google'])
   });
 
   it("GET /journeys , deve retornar 400, quando arquivo vier vazio", async () => {
@@ -64,7 +49,6 @@ describe("Testando as chamadas referente a journeys", () => {
 
     const result = await request(app)
       .get("/journeys")
-      .attach("file", Buffer.from("fake content"), "fake.xlsx");
 
     expect(result.status).toBe(400);
     expect(result.body.erro).toBe("Erro na leitura das jornadas");
@@ -75,7 +59,6 @@ describe("Testando as chamadas referente a journeys", () => {
 
     const result = await request(app)
       .get("/journeys")
-      .attach("file", Buffer.from("fake content"), "fake.xlsx");
 
     expect(result.status).toBe(500);
     expect(result.body.erro).toBe(
