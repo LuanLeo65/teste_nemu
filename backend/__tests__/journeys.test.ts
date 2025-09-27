@@ -3,8 +3,7 @@ import { jest, describe, expect, it, afterEach, afterAll} from '@jest/globals'
 import request from "supertest";
 import app from "../src/app";
 import repository from "../src/model/journeyModel";
-import path from 'path'
-import fs from 'fs/promises'
+
 
 const journey = [
   {

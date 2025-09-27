@@ -22,7 +22,6 @@ async function getJourneys(req: Request, res: Response, next: any) {
 
     fileObject.forEach((item) => {
       if (!agrouped[item.sessionId]) agrouped[item.sessionId] = [];
-      if (item.createdAt)
         agrouped[item.sessionId].push({
           utm_source: item.utm_source,
           createdAt: item.createdAt,
